@@ -59,7 +59,7 @@ export default {
 }
 </script>
 <template lang="">
-  <div class="overflow-x-hidden">
+  <div class="overflow-x-auto">
   <table class="w-full border-separate border-spacing-y-2">
     <thead>
       <tr >

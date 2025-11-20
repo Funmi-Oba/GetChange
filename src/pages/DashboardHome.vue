@@ -31,9 +31,10 @@
 
       <div>
         <CustomTableHeader>
-          <template #recent-activities />
+          <template #recent-activities>Recent Activities</template>
+          <template #table-page>1 of 8</template>
         </CustomTableHeader>
-        <CustomTable />
+        <DashboardTable />
       </div>
     </div>
     <div class="w-1/4 h-auto -my-14 -mr-14 bg-white">
@@ -45,7 +46,7 @@
 import GreenButton from '@/components/GreenButton.vue'
 import OutlineButton from '@/components/OutlineButton.vue'
 import CustomTableHeader from '@/components/CustomTableHeader.vue'
-import CustomTable from '@/components/CustomTable.vue'
+import DashboardTable from '@/components/DashboardTable.vue'
 import DashboardWidget from '@/components/DashboardWidget.vue'
 import DialogBox from '@/components/DialogBox.vue'
 import TopupWallet from '@/components/TopupWallet.vue'
@@ -55,7 +56,7 @@ export default {
     GreenButton,
     OutlineButton,
     CustomTableHeader,
-    CustomTable,
+    DashboardTable,
     DashboardWidget,
     DialogBox, TopupWallet,
   },
