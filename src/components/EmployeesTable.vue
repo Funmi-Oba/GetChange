@@ -1,50 +1,88 @@
-<script>
+<script setup lang="ts">
 import DeleteEmployee from './DeleteEmployee.vue'
+import { reactive, computed } from 'vue'
+const data = reactive({
+  showDeleteEmployee: false,
+  employeeToDelete: null,
+})
+const props = defineProps(['search', 'employees'])
 
-export default {
-  components: {
-    DeleteEmployee,
-  },
-  data() {
-    return {
-      showDeleteEmployee: false,
-      employeeToDelete: null,
-    }
-  },
-  props: ['search', 'employees'],
-  methods: {
-    openDeleteModal(index) {
-      const employee = this.filteredEmployees[index]
-      this.employeeToDelete = this.employees.indexOf(employee)
-      this.showDeleteEmployee = true
-    },
-    deleteEmployee() {
-      this.employees.splice(this.employeeToDelete, 1)
-      this.showDeleteEmployee = false
-    },
-    toggleSelectAll() {
-      const newValue = !this.allSelected
-      this.employees.forEach((emp) => {
-        emp.selected = newValue
-      })
-    },
-  },
-  computed: {
-    allSelected() {
-      return this.employees.length > 0 && this.employees.every((emp) => emp.selected)
-    },
-    filteredEmployees() {
-      if (!this.search) return this.employees
-
-      const term = this.search.toLowerCase()
-
-      return this.employees.filter(
-        (emp) =>
-          emp.firstName.toLowerCase().includes(term) || emp.lastName.toLowerCase().includes(term),
-      )
-    },
-  },
+//Methods
+const openDeleteModal = (index) => {
+  data.employeeToDelete = index
+  data.showDeleteEmployee = true
 }
+const deleteEmployee = () => {
+  props.employees.splice(data.employeeToDelete, 1)
+  data.employeeToDelete = null
+  data.showDeleteEmployee = false
+}
+const toggleSelectAll = () => {
+  const newValue = !allSelected.value
+  props.employees.forEach((emp) => {
+    emp.selected = newValue
+  })
+}
+
+//Computed
+const allSelected = computed(() => {
+  return props.employees.length > 0 && props.employees.every((emp) => emp.selected)
+})
+const filteredEmployees = computed(() => {
+  if (!props.search) return props.employees
+
+  const term = props.search.toLowerCase()
+
+  return props.employees.filter(
+    (emp) =>
+      emp.firstName.toLowerCase().includes(term) || emp.lastName.toLowerCase().includes(term),
+  )
+})
+
+// export default {
+//   components: {
+//     DeleteEmployee,
+//   },
+//   data() {
+//     return {
+//       showDeleteEmployee: false,
+//       employeeToDelete: null,
+//     }
+//   },
+//   props: ['search', 'employees'],
+//   methods: {
+//     openDeleteModal(index) {
+//       const employee = this.filteredEmployees[index]
+//       this.employeeToDelete = this.employees.indexOf(employee)
+//       this.showDeleteEmployee = true
+//     },
+//     deleteEmployee() {
+//       this.employees.splice(this.employeeToDelete, 1)
+//       this.showDeleteEmployee = false
+//     },
+//     toggleSelectAll() {
+//       const newValue = !this.allSelected
+//       this.employees.forEach((emp) => {
+//         emp.selected = newValue
+//       })
+//     },
+//   },
+//   computed: {
+//     allSelected() {
+//       return this.employees.length > 0 && this.employees.every((emp) => emp.selected)
+//     },
+//     filteredEmployees() {
+//       if (!this.search) return this.employees
+
+//       const term = this.search.toLowerCase()
+
+//       return this.employees.filter(
+//         (emp) =>
+//           emp.firstName.toLowerCase().includes(term) || emp.lastName.toLowerCase().includes(term),
+//       )
+//     },
+//   },
+// }
 </script>
 <template lang="">
   <div class="overflow-x-auto">
@@ -98,9 +136,9 @@ export default {
                 {{ employee.role }}
               </span>
             </td>
-            <td class="px-4 py-3 text-sm text-[#6A7E8A] text-right cursor-pointer">
+            <td class="px-4 py-3 text-sm text-[#6A7E8A] text-right">
               <button @click="openDeleteModal(index)">
-                <img src="/icons/trash.svg" alt="Delete" class="w-4 h-4" />
+                <img src="/icons/trash.svg" alt="Delete" class="w-4 h-4 cursor-pointer" />
               </button>
             </td>
           </tr>
@@ -114,11 +152,12 @@ export default {
         </tr>
       </tbody>
     </table>
+
     <DeleteEmployee
-      v-if="showDeleteEmployee"
-      @no="showDeleteEmployee = false"
+      v-if="data.employeeToDelete !== null"
+      @no="data.showDeleteEmployee = false"
       @confirm-delete="deleteEmployee"
-      :employee="employees[employeeToDelete]"
+      :employee="employees[data.employeeToDelete]"
     />
   </div>
 </template>

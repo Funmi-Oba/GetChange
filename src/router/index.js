@@ -16,6 +16,7 @@ import Password from '@/pages/Password.vue'
 import StoreInformation from '@/pages/StoreInformation.vue'
 import BillingInformation from '@/pages/BillingInformation.vue'
 import InvoiceHistory from '@/pages/InvoiceHistory.vue'
+import Counter from '@/pages/Counter.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,7 @@ const router = createRouter({
         { path: 'employee', component: Employee, name: 'employee' },
         { path: 'card', component: Card, name: 'card' },
         { path: 'walletHistory', component: WalletHistory, name: 'walletHistory' },
+        { path: 'counter', component: Counter, name: 'counter' },
         {
           path: '/settings',
           component: SettingsLayout,

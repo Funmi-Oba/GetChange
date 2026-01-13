@@ -2,27 +2,38 @@
   <div class="flex items-center justify-between relative bg-[#FFFFFF] h-20 w-full pl-4 pr-10">
     <img src="/logos/logo.png" alt="" class="" />
 
+    <router-link :to="{ name: 'counter' }">Counter</router-link>
     <div class="flex items-center space-x-6">
-      <div class="rounded-full bg-[#6A7E8A] size-6 overflow-hidden">
-          <img src="/images/funmi.png" alt="" class="w-full h-full object-cover">
+      <div class="relative inline-block">
+        <div class="rounded-full bg-[#6A7E8A] size-12 overflow-hidden">
+        <img src="/images/funmi.png" alt="" class=" w-full h-full object-cover z-0" />
+       
       </div>
+       <span
+          type="button"
+          class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold 
+           w-5 h-5 flex items-center justify-center rounded-full shadow z-50"
+        >
+          {{ $store.state.count }}
+      </span>
+      </div>
+      
       <p class="text-sm text-[#013C61]">Hi, Funmilayo</p>
       <button @click="toggleDropdown">
-        <img src="/icons/arrow-down.svg" alt="" class="cursor-pointer"/>
+        <img src="/icons/arrow-down.svg" alt="" class="cursor-pointer" />
       </button>
     </div>
   </div>
 
   <div
     v-if="showOptions"
-   
     class="bg-white p-6 mt-20 flex flex-col absolute justify-center space-y-4 top-0 right-5 rounded-lg shadow-lg z-50"
   >
-    <router-link class="flex space-x-2 cursor-pointer" :to="{name:'walletHistory'}">
+    <router-link class="flex space-x-2 cursor-pointer" :to="{ name: 'walletHistory' }">
       <img src="/icons/clock.svg" alt="" />
       <p class="text-xs text-[#013C61]">Wallet History</p>
     </router-link>
-    <router-link :to="{name:'settings'}" class="flex space-x-2 cursor-pointer">
+    <router-link :to="{ name: 'settings' }" class="flex space-x-2 cursor-pointer">
       <img src="/icons/settings.svg" alt="" />
       <p class="text-xs text-[#013C61]">Settings</p>
     </router-link>
@@ -41,7 +52,7 @@ export default {
     }
   },
   methods: {
-      toggleDropdown() {
+    toggleDropdown() {
       this.showOptions = !this.showOptions
     },
     logout() {
